@@ -1,0 +1,215 @@
+body {
+    background-color: #333;
+
+    &, div#ClassicView, div#MsgView {
+        overflow: hidden;
+    }
+
+    * {
+        color: #fff;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        text-shadow: 0 0 10px #fff;
+        text-align: center;
+        margin: 0px;
+
+        &.allHeight {
+            height: 100vh;
+        }
+        &.allWidth {
+            width: 100vw;
+        }
+        &.totHeight {
+            height: 100%;
+        }
+        &.totWidth {
+            width: 100%;
+        }
+        @for $i from 0 through 100 {
+            &.all#{$i}Height {
+                height: #{$i * 1vh};
+            }
+            &.all#{$i}Width {
+                width: #{$i * 1vw};
+            }
+            &.tot#{$i}Height {
+                height: #{$i * 1%};
+            }
+            &.tot#{$i}Width {
+                width: #{$i * 1%};
+            }
+        }
+        
+        &.hidden {
+            display: none !important;
+        }
+    }
+
+    div.flex {
+        display: flex;
+
+        &.row {
+            flex-direction: row;
+        }
+        &.col {
+            flex-direction: column;
+        }
+        &.space-between {
+            justify-content: space-between;
+            align-items: space-between;
+        }
+        &.space-around {
+            justify-content: space-around;
+            align-items: space-around;
+        }
+        &.center {
+            justify-content: center;
+            align-items: center;
+        }
+        &.start {
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        &.end {
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+        &.left {
+            justify-content: flex-start;
+            align-items: center;
+        }
+        &.right {
+            justify-content: flex-end;
+            align-items: center;
+        }
+        &.top {
+            justify-content: center;
+            align-items: flex-start;
+        }
+        &.bottom {
+            justify-content: center;
+            align-items: flex-end;
+        }
+        
+        @for $i from 0 through 10000 {
+            &.gap#{$i} {
+                gap: #{$i * 1px};
+            }
+        }
+    }
+
+    div#ClassicView {
+        #Timer, #Hour {
+            font-size: 18em;
+        }
+        #Timer {
+            font-size: 7em;
+            top: 28%;
+            
+            &.positive {
+                color: #0f0;
+                text-shadow: 0 0 10px #0f0;
+            }
+    
+            &.negative {
+                color: #f00;
+                text-shadow: 0 0 10px #f00;
+            }
+        }
+        .Activity {
+            font-size: 3em;
+    
+            span {
+                display: block;
+                font-size: 1.5em;
+            }
+    
+            &.actual {
+                left: 25%;
+                span {
+                    color: #0af;
+                    text-shadow: 0 0 10px #0af;
+                }
+            }
+            &.next {
+                left: 75%;
+                span {
+                    color: #00f;
+                    text-shadow: 0 0 10px #00f;
+                }
+            }
+        }
+    }
+
+    div#MsgView {
+        &.hidden {
+            display: none;
+        }
+
+        #MsgBox {
+            font-size: 6em;
+            width: 95%;
+        }
+    }
+
+    div#ForReal {
+        #Timer, #Hour {
+            font-size: 3em;
+        }
+        #Timer {
+            font-size: 2em;
+            top: 5%;
+            
+            &.positive {
+                color: #0f0;
+                text-shadow: 0 0 10px #0f0;
+            }
+    
+            &.negative {
+                color: #f00;
+                text-shadow: 0 0 10px #f00;
+            }
+        }
+    }
+    textarea, input {
+        resize: none;
+        background-color: #222;
+        border: 2px solid #fff;
+        border-radius: 20px;
+    }
+    textarea {
+        font-size: 3.4em;
+    }
+    input, label {
+        font-size: 0.75em;
+    }
+    button {
+        font-size: 2em;
+        background-color: #0c0;
+        border: 2px solid #fff;
+        border-radius: 20px;
+        padding: 10px 20px 10px 20px;
+        color: #222;
+        text-shadow: 0 0 10px #222;
+        
+        &:hover {
+            background-color: #080;
+        }
+        &#sendMessageButton {
+            margin-top: -75px;
+        }
+    }
+}
+
+@for $i from 100 through 0 {
+    @media screen and (max-width: #{($i / 100) * 1920px}) {
+        body {
+            font-size: #{($i / 100) * 1em};
+        }
+    }
+    @media screen and (max-height: #{($i / 100) * 1080px}) {
+        body {
+            font-size: #{($i / 100) * 1em};
+        }
+    }
+}

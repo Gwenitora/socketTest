@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>PROD | Cité des Pixels</title>
+    <link href="/style" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="ForReal">
+    <div class="flex col allHeight allWidth space-around">
+      <div class="flex col center">
+          <h1 id="Hour"></h1>
+          <h2 id="Timer"></h2>
+      </div>
+      <div class="flex row center totHeight totWidth">
+        <div class="flex col center totWidth tot90Height">
+          <textarea title="messageToSend" name="messageToSend" id="messageToSend" class="tot95Width tot90Height"></textarea>
+          <button id="sendMessageButton" onclick="buttonMessagePressed()">Send</button>
+        </div>
+        <div class="flex col center totWidth tot90Height gap20">
+          <textarea title="activitySelect0" name="activitySelect0" id="activitySelect0" class="tot95Width tot30Height"></textarea>
+          <div class="flex row totWidth gap15 space-around">
+            <button id="updateActivities" onclick="updateDatas()">Update</button>
+            <div class="flex row center gap5">
+              <input type="checkbox" name="secondTimer" id="secondTimer" checked onclick="checkBoxChange()">
+              <label for="secondTimer">secondTimer</label>
+            </div>
+            <div id="timStamp" class="flex row space-between gap10">
+              <input type="date" name="daterStamp" id="daterStamp" title="daterStamp" oninput="editTs(timeBeforeNext, false)">
+              <input type="time" name="timerStamp" id="timerStamp" title="timerStamp" oninput="editTs(timeBeforeNext, false)">
+            </div>
+            <button id="swapActivities" onclick="swapActivities()">Swap</button>
+          </div>
+          <textarea title="activitySelect1" name="activitySelect1" id="activitySelect1" class="tot95Width tot30Height"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/prod/script"></script>
+
+</html>

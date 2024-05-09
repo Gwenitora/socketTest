@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>CAST | Cité des Pixels</title>
+    <link href="/style" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="ClassicView">
+        <div class="flex col allHeight allWidth space-around">
+            <div class="flex col center">
+                <h1 id="Hour"></h1>
+                <h2 id="Timer"></h2>
+            </div>
+            <div class="flex row space-around totWidth">
+                <h3 class="Activity actual"></h3>
+                <h3 class="Activity next"></h3>
+            </div>
+        </div>
+    </div>
+    <div id="MsgView" class="hidden">
+        <div class="flex allHeight allWidth center">
+            <h1 id="MsgBox"></h1>
+        </div>
+    </div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/script"></script>
+
+</html>

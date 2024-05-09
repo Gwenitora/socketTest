@@ -1,0 +1,12 @@
+{
+  "name": "cite-pixel-casters",
+  "version": "0.0.1",
+  "description": "Info pour les casters lors de la citées des pixels",
+  "type": "commonjs",
+  "dependencies": {
+    "@gscript/gtools": "^1.1.54",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0",
+    "socket.io": "^4.7.5"
+  }
+}
