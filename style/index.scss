@@ -1,7 +1,7 @@
 body {
     background-color: #333;
 
-    &, div#ClassicView, div#MsgView {
+    &, div:where(#ClassicView, #MsgView) {
         overflow: hidden;
     }
 
@@ -99,7 +99,7 @@ body {
     }
 
     div#ClassicView {
-        #Timer, #Hour {
+        :where(#Timer, #Hour) {
             font-size: 18em;
         }
         #Timer {
@@ -153,7 +153,7 @@ body {
     }
 
     div#ForReal {
-        #Timer, #Hour {
+        :where(#Timer, #Hour) {
             font-size: 3em;
         }
         #Timer {
@@ -171,7 +171,7 @@ body {
             }
         }
     }
-    textarea, input {
+    :where(textarea, input) {
         resize: none;
         background-color: #222;
         border: 2px solid #fff;
@@ -180,7 +180,7 @@ body {
     textarea {
         font-size: 3.4em;
     }
-    input, label {
+    :where(input, label) {
         font-size: 0.75em;
     }
     button {
