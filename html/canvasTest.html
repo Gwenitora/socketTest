@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: absolute;
+            background-color: #00000000;
+            top: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        class GameObject {
+            constructor(canvas, ctx, pos, size, angle, rot, speed, col, borderRadiusPct) {
+                this.canvas = canvas;
+                this.ctx = ctx;
+                this.pos = pos;
+                this.size = size;
+                this.angle = angle * Math.PI / 180;
+                this.rot = rot;
+                this.speed = speed;
+                this.col = col;
+                this.borderRadiusPct = borderRadiusPct;
+                this.img = new Image();
+                this.imgExists = false;
+                this.img.onload = () => {
+                    this.imgExists = true;
+                }
+                this.img.onerror = () => {
+                    this.imgExists = false;
+                }
+                this.img.src = "";
+            }
+
+            draw() {
+                this.borderRadiusPct = Math.min(100, Math.max(0, this.borderRadiusPct));
+                var borderRadius = Math.min(this.size.x, this.size.y) * this.borderRadiusPct / 200;
+
+                if (this.imgExists) {
+                    var imgWidth, imgHeight;
+                    var imgRatio = this.img.width / this.img.height;
+                    var boxRatio = this.size.x / this.size.y;
+
+                    if (imgRatio > boxRatio) {
+                        imgWidth = this.size.x;
+                        imgHeight = imgWidth / imgRatio;
+                    } else {
+                        imgHeight = this.size.y;
+                        imgWidth = imgHeight * imgRatio;
+                    }
+
+                    var imgX = this.pos.x - imgWidth / 2;
+                    var imgY = this.pos.y - imgHeight / 2;
+                    this.ctx.drawImage(this.img, imgX + worldPos.x, imgY + worldPos.y, imgWidth, imgHeight);
+                } else {
+                    this.ctx.fillStyle = this.col;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.pos.x - this.size.x / 2 + borderRadius + worldPos.x, this.pos.y - this.size.y / 2 + worldPos.y);
+                    this.ctx.lineTo(this.pos.x + this.size.x / 2 - borderRadius + worldPos.x, this.pos.y - this.size.y / 2 + worldPos.y);
+                    this.ctx.arcTo(this.pos.x + this.size.x / 2 + worldPos.x, this.pos.y - this.size.y / 2 + worldPos.y, this.pos.x + this.size.x / 2 + worldPos.x, this.pos.y + this.size.y / 2 + worldPos.y, borderRadius);
+                    this.ctx.arcTo(this.pos.x + this.size.x / 2 + worldPos.x, this.pos.y + this.size.y / 2 + worldPos.y, this.pos.x - this.size.x / 2 + worldPos.x, this.pos.y + this.size.y / 2 + worldPos.y, borderRadius);
+                    this.ctx.arcTo(this.pos.x - this.size.x / 2 + worldPos.x, this.pos.y + this.size.y / 2 + worldPos.y, this.pos.x - this.size.x / 2 + worldPos.x, this.pos.y - this.size.y / 2 + worldPos.y, borderRadius);
+                    this.ctx.arcTo(this.pos.x - this.size.x / 2 + worldPos.x, this.pos.y - this.size.y / 2 + worldPos.y, this.pos.x + this.size.x / 2 + worldPos.x, this.pos.y - this.size.y / 2 + worldPos.y, borderRadius);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                }
+
+                this.ctx.restore();
+                this.pos.x += Math.cos(-this.angle) * this.speed;
+                this.pos.y += Math.sin(-this.angle) * this.speed;
+
+                if (this.pos.x - this.size.x / 2 < 0 || this.pos.x + this.size.x / 2 > this.canvas.width) {
+                    this.angle = Math.PI - this.angle;
+                }
+                if (this.pos.y - this.size.y / 2 < 0 || this.pos.y + this.size.y / 2 > this.canvas.height) {
+                    this.angle = -this.angle;
+                }
+            }
+
+            setPos(x, y) {
+                this.pos.x = x;
+                this.pos.y = y;
+            }
+
+            setSize(x, y) {
+                this.size.x = x;
+                this.size.y = y;
+            }
+
+            setAngle(angle) {
+                this.angle = angle * Math.PI / 180;
+            }
+
+            setRot(rot) {
+                this.rot = rot;
+            }
+
+            setSpeed(speed) {
+                this.speed = speed;
+            }
+
+            setCol(col) {
+                this.col = col;
+            }
+
+            setBorderRadiusPct(borderRadiusPct) {
+                this.borderRadiusPct = borderRadiusPct;
+            }
+
+            setImg(src) {
+                this.img.src = src;
+            }
+
+            getPos() {
+                return this.pos;
+            }
+
+            getSize() {
+                return this.size;
+            }
+
+            getAngle() {
+                return this.angle;
+            }
+
+            getRot() {
+                return this.rot;
+            }
+
+            getSpeed() {
+                return this.speed;
+            }
+
+            getCol() {
+                return this.col;
+            }
+
+            getBorderRadiusPct() {
+                return this.borderRadiusPct;
+            }
+
+            getImg() {
+                return this.img;
+            }
+        }
+
+        var canvas = document.querySelector("canvas");
+
+        var resizingWindow = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        addEventListener("resize", resizingWindow);
+        resizingWindow();
+
+        var ctx = canvas.getContext("2d");
+
+        var worldPos = {
+            x: 0,
+            y: 0
+        }
+
+        var speed = 5;
+
+        var object = new GameObject(canvas, ctx, {
+            x: canvas.width / 3,
+            y: canvas.height / 3
+        }, {
+            x: 100,
+            y: 100
+        }, Math.random() * 360, 0, speed, "blue", 40);
+
+        var object2 = new GameObject(canvas, ctx, {
+            x: canvas.width / 3 * 2,
+            y: canvas.height / 3 * 2
+        }, {
+            x: 100,
+            y: 100
+        }, Math.random() * 360, 0, speed, "red", 40);
+
+        setInterval(() => {
+            ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            object.draw();
+            object2.draw();
+        }, 1000 / 60);
+
+        var mouseDown = false;
+        var lastMousePos = {
+            x: 0,
+            y: 0
+        }
+        addEventListener("mousedown", (e) => {
+            mouseDown = true;
+            lastMousePos.x = e.clientX;
+            lastMousePos.y = e.clientY;
+        });
+        addEventListener("mouseup", () => {
+            mouseDown = false;
+        });
+        addEventListener("mousemove", (e) => {
+            if (mouseDown) {
+                worldPos.x += e.clientX - lastMousePos.x;
+                worldPos.y += e.clientY - lastMousePos.y;
+                lastMousePos.x = e.clientX;
+                lastMousePos.y = e.clientY;
+            }
+        });
+    </script>
+</body>
+
+</html>
