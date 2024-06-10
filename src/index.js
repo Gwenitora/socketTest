@@ -6,6 +6,7 @@ const { json, debug } = require("@gscript/gtools");
 
 const port = 81;
 
+json.isTabulate()
 debug.cls();
 
 const app = express();
