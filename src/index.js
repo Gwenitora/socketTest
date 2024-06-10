@@ -2,12 +2,13 @@ const express = require("express");
 const { createServer } = require("node:http");
 const { join } = require("node:path");
 const { Server } = require("socket.io");
-const { json, debug } = require("@gscript/gtools");
+const { json, debug, LoggerFile } = require("@gscript/gtools");
 
 const port = 81;
 
-json.isTabulate()
+json.isTabulate();
 debug.cls();
+LoggerFile.start("logs");
 
 const app = express();
 const server = createServer(app);
@@ -67,12 +68,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("editNextTimestamp", (timestamp) => {
+    debug.log("nextTimestamp: " + new Date(timestamp).toISOString().replace("T", " ").split('.')[0]);
     timeBeforeNext = timestamp;
     io.emit("nextTimestamp", timestamp);
     json.Save("timStamp", timeBeforeNext);
   });
 
   socket.on("editActivities", (act) => {
+    debug.log("activities: [ \"" + act.join("\", \"") + "\" ]");
     activities = act;
     io.emit(
       "activities",
