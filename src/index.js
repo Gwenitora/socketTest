@@ -21,6 +21,15 @@ json.Save(
   "activities",
   [activities[0], activities[1]].filter((a) => a !== undefined)
 );
+
+var _timeBeforeNext = json.Load("_timStamp") ? json.Load("_timStamp") : -1;
+var _activities = json.Load("_activities") ? json.Load("_activities") : [];
+json.Save("_timStamp", _timeBeforeNext);
+json.Save(
+  "_activities",
+  [_activities[0], _activities[1]].filter((a) => a !== undefined)
+);
+
 if (json.Load("msgs") === undefined) {
   json.Save("msgs", {});
 }
@@ -53,6 +62,15 @@ io.on("connection", (socket) => {
     "activities",
     [activities[0], activities[1]].filter((a) => a !== undefined)
   );
+  socket.emit("_nextTimestamp", _timeBeforeNext);
+  socket.emit(
+    "_activities",
+    [_activities[0], _activities[1]].filter((a) => a !== undefined)
+  );
+  socket.emit(
+    "_message",
+    json.Load("_msgs")
+  );
 
   socket.on("disconnect", () => {
     debug.log("user disconnected");
@@ -83,6 +101,32 @@ io.on("connection", (socket) => {
     );
     json.Save(
       "activities",
+      [activities[0], activities[1]].filter((a) => a !== undefined)
+    );
+  });
+
+  socket.on("_message", (msg) => {
+    io.emit("_message", msg);
+    var added = json.Load("_msgs");
+    added[new Date().toISOString()] = msg;
+    added = json.sort(added, true);
+    json.Save("_msgs", added);
+  });
+
+  socket.on("_editNextTimestamp", (timestamp) => {
+    timeBeforeNext = timestamp;
+    io.emit("_nextTimestamp", timestamp);
+    json.Save("_timStamp", timeBeforeNext);
+  });
+
+  socket.on("_editActivities", (act) => {
+    activities = act;
+    io.emit(
+      "_activities",
+      [activities[0], activities[1]].filter((a) => a !== undefined)
+    );
+    json.Save(
+      "_activities",
       [activities[0], activities[1]].filter((a) => a !== undefined)
     );
   });
