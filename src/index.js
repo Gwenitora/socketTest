@@ -4,6 +4,8 @@ const { join } = require("node:path");
 const { Server } = require("socket.io");
 const { json, debug } = require("@gscript/gtools");
 
+const port = 81;
+
 debug.cls();
 
 const app = express();
@@ -82,6 +84,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(81, () => {
-  debug.log("server running at http://localhost:81 and http://localhost:881/prod");
+server.listen(port, () => {
+  debug.log("server running at http://localhost:" + port + " and http://localhost:" + port + "/prod");
 });
