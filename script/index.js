@@ -22,13 +22,13 @@ async function setHour() {
 async function setTimer() {
   var timestamp = timeBeforeNext - new Date().getTime();
   if (timeBeforeNext < 0) {
-    document.getElementById("Timer").classList = ["hidden"];
+    document.getElementById("Timer").classList = "hidden";
     return;
   } else if (timestamp < 0) {
-    document.getElementById("Timer").classList = ["negative"];
+    document.getElementById("Timer").classList = "negative";
     timestamp = -timestamp;
   } else {
-    document.getElementById("Timer").classList = ["positive"];
+    document.getElementById("Timer").classList = "positive";
   }
   var date = new Date(timestamp);
   var minutes = date.getMinutes();
@@ -46,26 +46,18 @@ async function setTimer() {
 async function setActivity() {
   var activityA = document.getElementsByClassName("Activity actual");
   if (activities[0] === "" || activities[0] === undefined) {
-    document.getElementsByClassName("Activity actual")[0].classList = [
-      "Activity actual hidden",
-    ];
+    document.getElementsByClassName("Activity actual")[0].classList = "Activity actual hidden";
     activityA[0].innerHTML = "";
   } else {
-    document.getElementsByClassName("Activity actual")[0].classList = [
-      "Activity actual",
-    ];
+    document.getElementsByClassName("Activity actual")[0].classList = "Activity actual";
     activityA[0].innerHTML = "<span>En ce moment:</span>" + activities[0].replaceAll("\n", "<br/>").replaceAll("\\n", "<br/>");
   }
   var activityN = document.getElementsByClassName("Activity next");
   if (activities[1] === "" || activities[1] === undefined) {
-    document.getElementsByClassName("Activity next")[0].classList = [
-      "Activity next hidden",
-    ];
+    document.getElementsByClassName("Activity next")[0].classList = "Activity next hidden";
     activityN[0].innerHTML = "";
   } else {
-    document.getElementsByClassName("Activity next")[0].classList = [
-      "Activity next",
-    ];
+    document.getElementsByClassName("Activity next")[0].classList = "Activity next";
     activityN[0].innerHTML = "<span>Ensuite:</span>" + activities[1].replaceAll("\\n", "<br/>").replaceAll("\\", "<br/>").replaceAll("\n", "<br/>");
   }
 }
@@ -82,12 +74,12 @@ socket.on("message", function (msg) {
   var classicView = document.getElementById("ClassicView");
   var msgView = document.getElementById("MsgView");
   msgBox.innerText = msg;
-  classicView.classList = ["hidden"];
-  msgView.classList = [];
+  classicView.classList = "hidden totHeight totWidth";
+  msgView.classList = "totHeight totWidth";
 
   setTimeout(() => {
-    classicView.classList = [];
-    msgView.classList = ["hidden"];
+    classicView.classList = "totHeight totWidth";
+    msgView.classList = "hidden totHeight totWidth";
     msgBox.innerText = "";
   }, Math.max(5_000, 120 * msg.length));
 });

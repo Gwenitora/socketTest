@@ -8,23 +8,26 @@
     <link href="/style" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
-    <div id="ClassicView">
-        <div class="flex col allHeight allWidth space-around">
-            <div class="flex col center">
-                <h1 id="Hour"></h1>
-                <h2 id="Timer"></h2>
-            </div>
-            <div class="flex row space-around totWidth">
-                <h3 class="Activity actual"></h3>
-                <h3 class="Activity next"></h3>
+<body class="allHeight allWidth">
+    <div class="flex allHeight allWidth">
+        <div id="ClassicView" class="allHeight allWidth space-around">
+            <div class="flex col totHeight totWidth space-around">
+                <div class="flex col center">
+                    <h1 id="Hour"></h1>
+                    <h2 id="Timer"></h2>
+                </div>
+                <div class="flex row space-around totWidth">
+                    <h3 class="Activity actual"></h3>
+                    <h3 class="Activity next"></h3>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="MsgView" class="hidden">
-        <div class="flex allHeight allWidth center">
-            <h1 id="MsgBox"></h1>
+        <div id="MsgView" class="hidden totHeight totWidth">
+            <div class="flex totHeight totWidth center">
+                <h1 id="MsgBox"></h1>
+            </div>
         </div>
+        <iframe src="https://www.twitch.tv/embed/bichard/chat?parent=localhost" title="BichardChat"></iframe>
     </div>
 </body>
 <script src="/socket.io/socket.io.js"></script>

@@ -2,7 +2,9 @@ const express = require("express");
 const { createServer } = require("node:http");
 const { join } = require("node:path");
 const { Server } = require("socket.io");
-const { json } = require("@gscript/gtools");
+const { json, debug } = require("@gscript/gtools");
+
+debug.cls();
 
 const app = express();
 const server = createServer(app);
@@ -40,7 +42,7 @@ app.get("/script", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  debug.log("a user connected");
 
   socket.emit("nextTimestamp", timeBeforeNext);
   socket.emit(
@@ -49,11 +51,11 @@ io.on("connection", (socket) => {
   );
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    debug.log("user disconnected");
   });
 
   socket.on("message", (msg) => {
-    console.log("message: " + msg);
+    debug.log("message: " + msg);
     io.emit("message", msg);
     var added = json.Load("msgs");
     added[new Date().toISOString()] = msg;
@@ -80,6 +82,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(80, () => {
-  console.log("server running at http://localhost and http://localhost/prod");
+server.listen(81, () => {
+  debug.log("server running at http://localhost:81 and http://localhost:881/prod");
 });

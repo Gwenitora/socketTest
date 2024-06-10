@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Info pour les casters lors de la citées des pixels",
   "type": "commonjs",
+  "main": "src",
   "dependencies": {
     "@gscript/gtools": "^1.1.54",
     "express": "^4.19.2",
