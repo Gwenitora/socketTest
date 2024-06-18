@@ -132,7 +132,7 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/channel/:channel", (req, res) => {
+app.get("/:channel", (req, res) => {
   res.sendFile(join(__dirname, "../html/index.html"));
 });
 
