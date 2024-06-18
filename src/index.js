@@ -132,6 +132,10 @@ io.on("connection", (socket) => {
   });
 });
 
+app.get("/channel/:channel", (req, res) => {
+  res.sendFile(join(__dirname, "../html/index.html"));
+});
+
 server.listen(port, () => {
   debug.log("server running at http://localhost:" + port + " and http://localhost:" + port + "/prod");
 });
