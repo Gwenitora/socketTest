@@ -2,6 +2,8 @@ var socket = io();
 
 var timeBeforeNext = new Date().getTime();
 
+const iframe = document.getElementById("channel-iframe");
+
 async function editTs(timestamp, editBox = true) {
   timeBeforeNext = timestamp;
   var ts = timestamp < 0 ? new Date(new Date().getTime()) : new Date(timestamp);
@@ -152,5 +154,47 @@ socket.on("activities", function (act) {
   }
 });
 
+const setAutoCol = () => {
+  const elements = document.getElementsByClassName("auto-col");
+
+  for (var i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    var classes = element.classList;
+    if (document.body.clientWidth > document.body.clientHeight) {
+      classes.remove("col");
+      iframe.width = "500px";
+      iframe.height = "auto";
+    } else {
+      classes.add("col");
+      iframe.width = "auto";
+      iframe.height = "4000px";
+    }
+  }
+};
+
 setInterval(setHour, 50);
 setInterval(setTimer, 50);
+setInterval(setAutoCol, 50);
+
+if (
+  window.location.href.split("/")[
+    window.location.href.split("/").length - 2
+  ] === "prod"
+) {
+  iframe.src = `https://www.twitch.tv/embed/${window.location.href
+    .split("/")
+    [window.location.href.split("/").length - 1].toLowerCase()
+    .replaceAll("-", "_")}/chat?parent=localhost`;
+  iframe.title = `${window.location.href
+    .split("/")
+    [window.location.href.split("/").length - 1].toLowerCase()
+    .replaceAll("-", "_")
+    .split("_")
+    .map((e) => {
+      return e.charAt(0).toUpperCase() + e.slice(1);
+    })
+    .join("")}Chat`;
+} else {
+  iframe.style.width = "0";
+  iframe.style.height = "0";
+}
